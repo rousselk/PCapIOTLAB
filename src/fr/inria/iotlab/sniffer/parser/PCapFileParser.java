@@ -4,6 +4,9 @@ import java.io.EOFException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
+
 
 /**
  * Parser class for PCap files.
@@ -236,7 +239,7 @@ public class PCapFileParser {
 	///*** METHODES DE LECTURE ***///
 
 	/**
-	 * Reads and parses the next packet in the currently open PCap file.
+	 * Read and parse the next packet in the currently open PCap file.
 	 * 
 	 * @return the latest packet read in parsed form
 	 *         (<code>PCapSniffedPacket</code> instance).
@@ -264,6 +267,25 @@ public class PCapFileParser {
 				len,
 				origLen,
 				data);
+	}
+
+	/**
+	 * Read and parse all packets stored in the currently open PCap file.
+	 * 
+	 * @return the <code>List</code> of all the packets
+	 *         stored in the current PCap file in parsed form
+	 *         (<code>PCapSniffedPacket</code> instance).
+	 * @throws IOException if an I/O error prevents the packets
+	 *                     from being correctly read (like for example
+	 *                     an unexpected EOF in the middle packet data).
+	 * @see PCapSniffedPacket
+	 */
+	public List<PCapSniffedPacket> readAllPackets() throws IOException {
+		List<PCapSniffedPacket> pkts = new LinkedList<PCapSniffedPacket>();
+		while (!lastPacketRead()) {
+			pkts.add(readNextPacket());
+		}
+		return pkts;
 	}
 
 	/**
