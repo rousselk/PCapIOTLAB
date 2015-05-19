@@ -58,7 +58,7 @@ public class NumberInputStream extends InputStream {
 		this.baseInputStream = base;
 	}
 
-	///*** METHODE ABSTRAITE HERITEE ***///
+	///*** METHODES HERITEES ***///
 
 	/*
 	 * (non-Javadoc)
@@ -68,6 +68,17 @@ public class NumberInputStream extends InputStream {
 	public int read() throws IOException {
 		/* simply read a byte from the base input stream */
 		return baseInputStream.read();
+	}
+
+	/**
+	 * Closes the underlying base <code>InputStream</code> of this stream.
+	 * (This is the only resource associated with this kind of stream.)
+	 * 
+	 * @throws IOException if an I/O error occurs.
+	 */
+	@Override
+	public void close() throws IOException {
+		this.baseInputStream.close();
 	}
 
 	///*** ACCESSEURS/MODIFICATEURS DE PROPRIETES ***///
