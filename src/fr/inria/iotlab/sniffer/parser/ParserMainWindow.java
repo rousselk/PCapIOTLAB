@@ -168,7 +168,7 @@ public class ParserMainWindow {
 		panelFile.add(lblIntroNetType);
 		
 		lblNetType = new JLabel("--");
-		lblNetType.setBounds(172, 172, 128, 15);
+		lblNetType.setBounds(172, 172, 459, 15);
 		panelFile.add(lblNetType);
 
 
@@ -238,8 +238,9 @@ public class ParserMainWindow {
 					pcapParser.getTimeZoneDelta()));
 			lblMaxPktLen.setText(String.format("%d bytes",
 					pcapParser.getMaxPacketLength()));
-			lblNetType.setText(String.format("%d",
-					pcapParser.getNetworkType()));
+			NetworkType netType = pcapParser.getNetworkType();
+			lblNetType.setText(String.format("%d (LINKTYPE_%s)",
+					netType.getID(), netType.getLinkType()));
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(
 					frmPcapAnalyzerForm,

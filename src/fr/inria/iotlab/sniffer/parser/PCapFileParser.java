@@ -80,7 +80,7 @@ public class PCapFileParser {
 	private int timeZoneDelta;
 	private int timeStampAccuracy;
 	private int maxPacketLength;
-	private int networkType;
+	private NetworkType netType;
 
 	///*** CONSTRUCTEUR ***///
 
@@ -153,7 +153,8 @@ public class PCapFileParser {
 			this.timeZoneDelta = this.pcapInputStream.readInt();
 			this.timeStampAccuracy = this.pcapInputStream.readInt();
 			this.maxPacketLength = this.pcapInputStream.readInt();
-			this.networkType = this.pcapInputStream.readInt();
+			int netTypeID = this.pcapInputStream.readInt();
+			this.netType = NetworkType.getNetworkTypeFromID(netTypeID);
 
 		} catch (EOFException exc) {
 			throw new IllegalArgumentException(String.format(
@@ -210,8 +211,8 @@ public class PCapFileParser {
 	 * @return the data link type of the network
 	 *         from which this file was "sniffed".
 	 */
-	public int getNetworkType() {
-		return this.networkType;
+	public NetworkType getNetworkType() {
+		return this.netType;
 	}
 
 	/**
